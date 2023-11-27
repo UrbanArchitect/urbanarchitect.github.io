@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Urban Architect: Steerable 3D Urban Scene Generation with Layout Prior.">
+  <meta name="keywords" content="3D Generation, Urban">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Urban Architect: Steerable 3D Urban Scene Generation with Layout Prior</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Urban Architect: Steerable 3D Urban Scene Generation with Layout Prior</h1>
+          <!-- <h2 class="title is-3">Anonymous</h2> -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Anonymous</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/teaser.png" alt="teaser" class="teaser-image">
+      <center>
+      <p>
+        <b>Urban Architect for steerable 3D urban scene generation.</b>
+        We present Urban Architect, a method to generate steerable 3D urban scenes by 
+        introducing 3D layout as an additional prior to complement textual descriptions. 
+        The framework enjoys three key properties: (1) Large-scale urban scene creation. 
+        The scale goes beyond 1000m driving distance in our experiments. (2) High quality.
+         The generated scene enables photo-realistic rendering (upper row) and obeys geometric consistency 
+         (the left side of the first camera's upper image). (3) Steerable creation process. 
+         It supports various scene editing effects by fine-tuning the generated scene in a breeze 
+         (e.g., style editing (lower row)).
+      </p>
+    </center>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Text-to-3D generation has achieved remarkable success in digital object creation, 
+            attributed to the utilization of large-scale text-to-image diffusion models. 
+            Nevertheless, there is no paradigm for scaling up the methodology to urban scale. 
+            The complexity and vast scale of urban scenes, characterized by numerous elements and intricate arrangement relationships, 
+            present a formidable barrier to the interpretability of ambiguous textual descriptions for effective model optimization.
+            In this work, we surmount the limitations via a paradigm shift in the current text-to-3D methodology, 
+            accomplished through a compositional 3D layout representation serving as an additional prior. 
+            The 3D layout comprises a set of semantic primitives with simple geometric structures
+             (e.g., cuboids, ellipsoids, and planes), and explicit arrangement relationships. 
+             It complements textual descriptions, and meanwhile enables steerable generation. 
+             Based on the 3D layout representation, we propose two modifications to the current text-to-3D paradigm 
+             (1) We introduce Layout-Guided Variational Score Distillation (LG-VSD) to address model optimization inadequacies.
+              It incorporates the geometric and semantic constraints of the 3D layout into the the fabric of score distillation sampling process, 
+              effectuated through an elegant formula extension into a conditional manner. 
+              (2) To handle the unbounded nature of the urban scenes, we represent the 3D scene with a Scalable Hash Grid structure, 
+              which incrementally adapts to the growing scale of urban scenes. 
+              Extensive experiments substantiate the robustness of our framework, 
+              showcasing its capability to scale text-to-3D generation to large-scale urban scenes that cover over 1000m driving distance for the first time. 
+              We also present various scene editing demonstrations (e.g., style editing, object manipulation, etc.), 
+              showing the complementary powers of both 3D layout prior and text-to-image diffusion models in our framework for steerable urban scene generation.
+        </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method overview</h2>
+        <img src="./static/images/framework.png" alt="teaser" class="teaser-image">
+        <p>
+          <b>Overview of Urban Architect.</b> 
+          We introduce Urban Architect, a method that generates urban-scale 3D scenes with 3D layout instruction and textural descriptions. 
+          The scene is represented by a neural field that is optimized by distilling a pre-trained diffusion model in a conditional manner. 
+          (a) Rather than relying solely on the text-based guidance, we propose to control the distilling process of Variational Score Distillation (VSD) 
+          via the 3D layout of the desired scene, introducing Layout-Guided Variational Score Distillation (LG-VSD).
+           (b) We refine the local details via a layout-aware refinement strategy. 
+           (c) To model unbounded urban scenes, we discretize the 3D representation into a scalable hash grid. 
+           (d) We support various scene editing effects by fine-tuning the generated scene.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="column">
+      <div class="column is-centered">
+        <center>
+        <h2 class="title is-3">Results</h2><br>
+        </center>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+
+      <div class="column">
+        <h2 class="title is-4">Diverse 3D results</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/seq1.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/seq2.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <!-- <h2 class="title is-4">Diverse Scenes</h2> -->
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/seq3.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/seq4.mp4"
+                      type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-4">Comparison with other methods</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video width="320" height="320" id="editing" autoplay controls muted loop playsinline>
+              <source src="./static/videos/eg3d.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                EG3D
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video width="320" height="320" id="editing" autoplay controls muted loop playsinline>
+              <source src="./static/videos/cc3d.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                CC3D
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video width="320" height="320" id="editing" autoplay controls muted loop playsinline>
+              <source src="./static/videos/seq5.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                Ours
+              </p>
+            </center>
+          </div>
+  
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-4">Transfer to different weather and time</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/night.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"night time"</i>
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/rainy.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"rainy"</i>
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/snow.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"in winter, with snow"</i>
+              </p>
+            </center>
+          </div>
+  
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-4">Transfer to different style</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/minecraft.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"minecraft style"</i>
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/cartoon.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"cartoon style"</i>
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/vangogh.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"Vangogh paint"</i>
+              </p>
+            </center>
+          </div>
+  
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-4">Transfer to different city</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/kyoto.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"in Kyoto"</i>
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/hawaii.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"in Hawaii"</i>
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/venice.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                <i>"in Venice"</i>
+              </p>
+            </center>
+          </div>
+  
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column">
+        <h2 class="title is-4">Object manipulation</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/translation.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                Translation
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/rotation.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                Rotation
+              </p>
+            </center>
+          </div>
+          <div class="column content">
+            <video id="editing" autoplay controls muted loop playsinline height="100%">
+              <source src="./static/videos/scaling.mp4"
+                      type="video/mp4">
+            </video>
+            <center>
+              <p>
+                Scaling
+              </p>
+            </center>
+          </div>
+  
+        </div>
+      </div>
+
+    </div>
+
+    <div class="columns is-centered">
+
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-4">Stuff editing</h2>
+          <video id="texture" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/stuff.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-4">Large-scale generation: ~600x400m region, > 1000m driving distance</h2>
+          <video id="texture" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/largescale.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <center>
+          <p>
+            This template is borrowed from <a
+              href="https://github.com/nerfies/nerfies.github.io">nerfies's webpage</a>.
+          </p>
+        </center>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
